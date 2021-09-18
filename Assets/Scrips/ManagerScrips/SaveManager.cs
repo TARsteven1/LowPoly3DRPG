@@ -18,7 +18,7 @@ public class SaveManager : Singleton<SaveManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SenceManager.Instance.TransitionToMain();
+            SenceControler.Instance.TransitionToMain();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {

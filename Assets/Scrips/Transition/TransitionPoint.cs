@@ -36,7 +36,7 @@ public class TransitionPoint : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E)&&canTrans)
         {
-            SenceManager.Instance.TransitionToDestination(this);
+            SenceControler.Instance.TransitionToDestination(this);
         }
     }
 }

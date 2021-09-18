@@ -1,41 +1,40 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class MainMenu : MonoBehaviour
 {
     Button Startbtn;
     Button Continuebtn;
     Button Quitbtn;
+PlayableDirector directer;
 
     private void Awake()
     {
         Startbtn = transform.GetChild(1).GetComponent<Button>();
         Continuebtn = transform.GetChild(2).GetComponent<Button>();
         Quitbtn = transform.GetChild(3).GetComponent<Button>();
-        Startbtn.onClick.AddListener(NewGame);
+        Startbtn.onClick.AddListener(PlayTImeline);
         Continuebtn.onClick.AddListener(ContinueGame);
         Quitbtn.onClick.AddListener(QuitGame);
+
+directer=FindObjectOfType<PlayableDirector>();
+directer.stopped+=NewGame;
     }
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    void NewGame() {
+void PlayTImeline(){
+        directer.Play();
+}
+    void NewGame(PlayableDirector obj) {
         PlayerPrefs.DeleteAll();
-
-        SenceManager.Instance.TransitionToFirstLevel();
+        Debug.Log(111);
+        SenceControler.Instance.TransitionToFirstLevel();
     }
     void ContinueGame() {
-        SenceManager.Instance.TransitionToLoadGame();
+        SenceControler.Instance.TransitionToLoadGame();
     }
     void QuitGame() {
         Application.Quit();
