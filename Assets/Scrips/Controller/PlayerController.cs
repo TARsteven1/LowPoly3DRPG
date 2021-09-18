@@ -91,12 +91,13 @@ public class PlayerController : MonoBehaviour
     {
         MouseManager.Instance.OnMouseClicked += MoveToTarget;
         MouseManager.Instance.OnEnemyClicked += EventAttack;
-    }
-    void Start()
-    {
-       
         //注册gm
         GameManager.Instance.RegisterPlayer(characterStats);
+    }
+    void Start()
+    {       
+        //加载数据
+        SaveManager.Instance.LoadPlayerData();
         
     }
 

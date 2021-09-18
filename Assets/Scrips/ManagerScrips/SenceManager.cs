@@ -29,6 +29,7 @@ public class SenceManager : Singleton<SenceManager>
         }
     }
     IEnumerator Transition(string sceneName,TransitionDestination.DestinationTag destinationTag) {
+        SaveManager.Instance.SavePlayerData();
         if (SceneManager.GetActiveScene().name!=sceneName)
         {
             yield return SceneManager.LoadSceneAsync(sceneName);
@@ -41,6 +42,7 @@ public class SenceManager : Singleton<SenceManager>
             playerAgent = player.GetComponent<NavMeshAgent>();
             playerAgent.enabled = false;
             player.transform.SetPositionAndRotation(GetDestination(destinationTag).transform.position, GetDestination(destinationTag).transform.rotation);
+            SaveManager.Instance.LoadPlayerData();
             playerAgent.enabled = true;
             yield return null;
         }
@@ -56,5 +58,29 @@ public class SenceManager : Singleton<SenceManager>
             }
         }
         return null;
+    }
+    public void TransitionToMain() {
+        StartCoroutine(LoadMain());
+    }
+    public void TransitionToLoadGame() {
+        StartCoroutine(LoadLevel(SaveManager.Instance.SceneName));
+    }
+    public void TransitionToFirstLevel() {
+        StartCoroutine(LoadLevel("Game"));
+    
+    }
+    IEnumerator LoadLevel(string scene) {
+        if (scene!="")
+        {
+            yield return SceneManager.LoadSceneAsync(scene);
+            yield return player = Instantiate(playerPrefs, GameManager.Instance.GetEnterance().position, GameManager.Instance.GetEnterance().rotation);
+            SaveManager.Instance.SavePlayerData();
+            yield break;
+           
+         }
+    }
+    IEnumerator LoadMain() {
+        yield return SceneManager.LoadSceneAsync("Start");
+        yield break;
     }
 }

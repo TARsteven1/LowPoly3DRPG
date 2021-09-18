@@ -44,4 +44,15 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         DontDestroyOnLoad(this);
     }
+    //找到出生点
+    public Transform GetEnterance() {
+        foreach (var item in FindObjectsOfType<TransitionDestination>())
+        {
+            if (item.destinationTag== TransitionDestination.DestinationTag.ENTER)
+            {
+                return item.transform;
+            }
+        }
+        return null;
+    }
 }
