@@ -40,6 +40,7 @@ public class SenceControler : Singleton<SenceControler>,IEndGameObserver
         {
             yield return SceneManager.LoadSceneAsync(sceneName);
             yield return Instantiate(playerPrefs, GetDestination(destinationTag).transform.position, GetDestination(destinationTag).transform.rotation);
+            SaveManager.Instance.LoadPlayerData();
             yield break;
         }
         else
